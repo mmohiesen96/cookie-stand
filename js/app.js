@@ -1,208 +1,136 @@
 'use strict';
+
+// Random number generator function
+// Global declarations
 let hours = ['6 am ', '7 am ', '8 am ', '9 am ', '10 am ', '11 am ', '12 pm ', '1 pm ', '2 pm ', '3 pm ', '4 pm ', '5 pm ', '6 pm ', '7 pm '];
-let total = 0;
-function randomGenerator(min ,max) {
+function randomGenerator(min, max) {
 
     return Math.floor(Math.random() * (max - min)) + min;
 }
+let totalOfTotals = 0;
+let parentTable = document.getElementById('Container');
+let tableElement = document.createElement('table');
+parentTable.appendChild(tableElement);
 
-let seattle = {
+//  Constructor for cities
 
-    minCust: 23,
-    maxCust: 65,
-    avgCookie: 6.3,
-    averageSales: [],
-    costumerHrGenerator : 1,
+function City(minCust, maxCust, avgCookie, total, name) {
+    this.name = name;
+    this.minCust = minCust;
+    this.maxCust = maxCust;
+    this.avgCookie = avgCookie;
+    this.total = total;
+    this.costumerHrGenerator = [];
+    this.averageSales = [];
+}
+// Prototype functions and properties 
 
-    customers: function () {
-        for (let i = 0; i < 14; i++) {
-            this.costumerHrGenerator = randomGenerator(this.minCust , this.maxCust);
-        }
-        return this.costumerHrGenerator;
-    },
-    sales: function () {
-        for (let i = 0; i < 14; i++) {
-            this.averageSales[i] = Math.floor(this.customers() * this.avgCookie);
-        }
-        return this.averageSales;
+
+let hourlySales = [];
+City.prototype.customers = function () {
+    for (let i = 0; i < hours.length; i++) {
+        this.costumerHrGenerator[i] = randomGenerator(this.minCust, this.maxCust);
     }
-    ,
+};
+City.prototype.render = function () {
+    let trElement = document.createElement('tr');
+    tableElement.appendChild(trElement);
+    let tableCell = document.createElement('td');
+    trElement.appendChild(tableCell).textContent = this.name;
+    for (let i = 0; i <= hours.length; i++) {
+        if (i === 14) {
+
+            let tableCell = document.createElement('td');
+            trElement.appendChild(tableCell).textContent = this.total;
+        }
+        let tableCell = document.createElement('td');
+        trElement.appendChild(tableCell).textContent = this.averageSales[i];
+    }
+
+
 
 };
 
-document.getElementById('Seattle').appendChild(document.createElement('h1')).textContent = 'Seattle';
-document.getElementById('Seattle').appendChild(document.createElement('ul'));
 
-for ( let i = 0 ; i < 14 ; i++) {
-    document.getElementsByTagName('ul')[0].appendChild(document.createElement('li')).textContent = hours[i] + ' : ' + seattle.sales()[i] + ' cookies.';
-    total += seattle.sales()[i];
-}
-
-document.getElementsByTagName('ul')[0].appendChild(document.createElement('li')).textContent = 'Total : ' + total;
-
-// **********************************************
-// **********************************************
-// **********************************************
-// **********************************************
-
-total = 0 ;
-let Tokyo = {
-
-    total: 0,
-    minCust: 3,
-    maxCust: 24,
-    avgCookie: 1.2,
-    averageSales: [],
-    costumerHrGenerator : 1,
-
-    customers: function () {
-        for (let i = 0; i < 14; i++) {
-            this.costumerHrGenerator = randomGenerator(this.minCust , this.maxCust);
-        }
-        return this.costumerHrGenerator;
-    },
-    sales: function () {
-        for (let i = 0; i < 14; i++) {
-            this.averageSales[i] = Math.floor(this.customers() * this.avgCookie);
-            this.total += this.averageSales[i];
-        }
-        return this.averageSales;
+City.prototype.sales = function () {
+    for (let i = 0; i < hours.length; i++) {
+        this.averageSales[i] = Math.floor(this.costumerHrGenerator[i] * this.avgCookie);
+        this.total += this.averageSales[i];
+        totalOfTotals += this.averageSales[i];
     }
-    ,
-
 };
 
-document.getElementById('Tokyo').appendChild(document.createElement('h1')).textContent = 'Tokyo';
-document.getElementById('Tokyo').appendChild(document.createElement('ul'));
+let Seattle = new City(23, 65, 6.3, 0, 'Seattle');
+Seattle.customers();
+Seattle.sales();
+console.log(Seattle.name);
+let Tokyo = new City(3, 24, 1.2, 0, 'Tokyo');
+Tokyo.customers();
+Tokyo.sales();
+let Dubai = new City(11, 38, 3.7, 0, 'Dubai');
+Dubai.customers();
+Dubai.sales();
+let Paris = new City(20, 38, 2.3, 0, 'Paris');
+Paris.customers();
+Paris.sales();
+let Lima = new City(2, 16, 4.6, 0, 'Lima');
+Lima.customers();
+Lima.sales();
 
-for ( let i = 0 ; i < 14 ; i++) {
-    document.getElementsByTagName('ul')[1].appendChild(document.createElement('li')).textContent = hours[i] + ' : ' + Tokyo.sales()[i] + ' cookies.';
-    total += Tokyo.sales()[i];
-}
 
-document.getElementsByTagName('ul')[1].appendChild(document.createElement('li')).textContent = 'Total : ' + total;
+// Hourly sales calculator
 
-
-let Dubai = {
-
-    total: 0,
-    minCust: 11,
-    maxCust: 38,
-    avgCookie: 3.7,
-    averageSales: [],
-    costumerHrGenerator : 1,
-
-    customers: function () {
-        for (let i = 0; i < 14; i++) {
-            this.costumerHrGenerator = randomGenerator(this.minCust , this.maxCust);
-        }
-        return this.costumerHrGenerator;
-    },
-    sales: function () {
-        for (let i = 0; i < 14; i++) {
-            this.averageSales[i] = Math.floor(this.customers() * this.avgCookie);
-            this.total += this.averageSales[i];
-        }
-        return this.averageSales;
+function hourlySalesCalculator() {
+    for (let i = 0; i < hours.length; i++) {
+        hourlySales[i] = Seattle.averageSales[i] + Tokyo.averageSales[i] + Dubai.averageSales[i] + Paris.averageSales[i] + Lima.averageSales[i];
     }
-    ,
-
-};
-
-document.getElementById('Dubai').appendChild(document.createElement('h1')).textContent = 'Dubai';
-
-document.getElementById('Dubai').appendChild(document.createElement('ul'));
-
-for ( let i = 0 ; i < 14 ; i++) {
-    document.getElementsByTagName('ul')[2].appendChild(document.createElement('li')).textContent = hours[i] + ' : ' + Dubai.sales()[i] + ' cookies.';
-    total += Dubai.sales()[i];
 }
-
-document.getElementsByTagName('ul')[2].appendChild(document.createElement('li')).textContent = 'Total : ' + total;
-
-// **********************************************
-// **********************************************
-// **********************************************
-// **********************************************
+hourlySalesCalculator();
 
 
-let Paris = {
 
-    total: 0,
-    minCust: 20,
-    maxCust: 38,
-    avgCookie: 2.3,
-    averageSales: [],
-    costumerHrGenerator : 1,
-
-    customers: function () {
-        for (let i = 0; i < 14; i++) {
-            this.costumerHrGenerator = randomGenerator(this.minCust , this.maxCust);
+// tr for header
+function hoursDisplay() {
+    let trElement = document.createElement('tr');
+    tableElement.appendChild(trElement);
+    for (let i = -1; i < hours.length; i++) {
+        if (i >= 0) {
+            let thElement = document.createElement('th');
+            trElement.appendChild(thElement).textContent = hours[i];
         }
-        return this.costumerHrGenerator;
-    },
-    sales: function () {
-        for (let i = 0; i < 14; i++) {
-            this.averageSales[i] = Math.floor(this.customers() * this.avgCookie);
-            this.total += this.averageSales[i];
+        else {
+            let thElement = document.createElement('th');
+            trElement.appendChild(thElement).textContent = '                ';
         }
-        return this.averageSales;
     }
-    ,
 
-};
+    let thElement = document.createElement('th');
+    trElement.appendChild(thElement).textContent = 'Total';
 
-document.getElementById('Paris').appendChild(document.createElement('h1')).textContent = 'Paris';
-document.getElementById('Paris').appendChild(document.createElement('ul'));
-
-for ( let i = 0 ; i < 14 ; i++) {
-    document.getElementsByTagName('ul')[3].appendChild(document.createElement('li')).textContent = hours[i] + ' : ' + Paris.sales()[i] + ' cookies.';
-    total += Paris.sales()[i];
 }
 
-document.getElementsByTagName('ul')[3].appendChild(document.createElement('li')).textContent = 'Total : ' + total;
-
-
-// **********************************************
-// **********************************************
-// **********************************************
-// **********************************************
-
-
-let Lima = {
-
-    total: 0,
-    minCust: 2,
-    maxCust: 16,
-    avgCookie: 4.6,
-    averageSales: [],
-    costumerHrGenerator : 1,
-
-    customers: function () {
-        for (let i = 0; i < 14; i++) {
-            this.costumerHrGenerator = randomGenerator(this.minCust , this.maxCust);
+function hourlyTotal() {
+    let trElement = document.createElement('tr');
+    tableElement.appendChild(trElement);
+    for (let i = -1; i <= hours.length; i++) {
+        if (i >= 0 && i !== 14) {
+            let thElement = document.createElement('th');
+            trElement.appendChild(thElement).textContent = hourlySales[i];
         }
-        return this.costumerHrGenerator;
-    },
-    sales: function () {
-        for (let i = 0; i < 14; i++) {
-            this.averageSales[i] = Math.floor(this.customers() * this.avgCookie);
-            this.total += this.averageSales[i];
+        else if (i === 14) {
+            let thElement = document.createElement('th');
+            trElement.appendChild(thElement).textContent = totalOfTotals;
         }
-        return this.averageSales;
+        else {
+            let thElement = document.createElement('th');
+            trElement.appendChild(thElement).textContent = 'Total';
+        }
     }
-    ,
-
-};
-
-document.getElementById('Lima').appendChild(document.createElement('h1')).textContent = 'Lima';
-
-
-document.getElementById('Lima').appendChild(document.createElement('ul'));
-
-for ( let i = 0 ; i < 14 ; i++) {
-    document.getElementsByTagName('ul')[4].appendChild(document.createElement('li')).textContent = hours[i] + ' : ' + Lima.sales()[i] + ' cookies.';
-    total += Lima.sales()[i];
 }
-
-document.getElementsByTagName('ul')[4].appendChild(document.createElement('li')).textContent = 'Total : ' + total;
+hoursDisplay();
+Seattle.render();
+Tokyo.render();
+Dubai.render();
+Paris.render();
+Lima.render();
+hourlyTotal();
