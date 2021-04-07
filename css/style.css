@@ -1,3 +1,8 @@
+*{
+    box-sizing: border-box;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
 
 table, th, td {
     border: 1px solid black;
@@ -29,6 +34,7 @@ h1{
     font-size: 85px;
     color: #4e3620;
     margin-top: 0;
+    width: 70%;
 }
 #logo{
     width: 250px;
@@ -44,11 +50,71 @@ nav{
 #family{
     margin: 50px 0 50px 300px;
 }
-main p {
-    margin: 25px 0 25px 300px;
-}
+
 
 #images{
     margin: 50px 0 50px 200px;
+
+}
+ul{
+    margin-bottom: 50px;
+    width: 20%;
+}
+
+
+hr{
+    border:dotted #532e1c 6px;
+    border-bottom: none;
+    width: 5%;
+    margin:100px auto 100px auto ;
+}
+
+footer{
+    width: 15%;
+    margin : 10px auto;
+}
+
+main p {
+    margin-left: 300px;
+}
+
+button{
+    transition: 0.7s;
+    border: none;
+    color: blanchedalmond;
+    background-color: #0f0f0f;
+    padding: 15px;
+    border-radius: 0.7rem ;
+}
+
+button:hover{
+    opacity: 0.8;
+    background-color: #4e3620 ;
+}
+
+a{
+    text-align: center;
+    text-decoration: none;
+    transition: 0.7s;
+    width: 100px;
+    border: none;
+    color: blanchedalmond;
+    background-color: #0f0f0f;
+    padding: 15px;
+    border-radius: 0.7rem ;
+    position: absolute;
+    right: 100px;
+    top: 45px;
+}
+
+a:hover{
+    opacity: 0.8;
+    background-color: #4e3620 ;
+}
+
+p,li{
+    color: #0f0f0f;
+    line-height: 2;
+    font-weight: 800;
 
 }
