@@ -14,7 +14,7 @@ parentTable.appendChild(tableElement);
 
 //  Constructor for cities
 
-function City(minCust, maxCust, avgCookie, total, name) {
+function City(minCust, maxCust, avgCookie, total, name ) {
     this.name = name;
     this.minCust = minCust;
     this.maxCust = maxCust;
