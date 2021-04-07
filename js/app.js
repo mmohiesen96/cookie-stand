@@ -43,8 +43,10 @@ City.prototype.render = function () {
             let tableCell = document.createElement('td');
             trElement.appendChild(tableCell).textContent = this.total;
         }
-        let tableCell = document.createElement('td');
-        trElement.appendChild(tableCell).textContent = this.averageSales[i];
+        else {
+            let tableCell = document.createElement('td');
+            trElement.appendChild(tableCell).textContent = this.averageSales[i];
+        }
     }
 
 
@@ -53,7 +55,7 @@ City.prototype.render = function () {
 
 
 City.prototype.sales = function () {
-    this.total=0;
+    this.total = 0;
     for (let i = 0; i < hours.length; i++) {
         this.averageSales[i] = Math.floor(this.costumerHrGenerator[i] * this.avgCookie);
         this.total += this.averageSales[i];
@@ -88,7 +90,8 @@ function hoursDisplay() {
         }
         else {
             let thElement = document.createElement('th');
-            trElement.appendChild(thElement).textContent = '';
+            thElement.setAttribute('id' , 'Store-time');
+            trElement.appendChild(thElement).textContent = 'Store / Time';
         }
     }
 
@@ -99,7 +102,7 @@ function hoursDisplay() {
 let hourlySales = [];
 function hourlySalesCalculator() {
     hourlySales = [];
-    let x =0 ;
+    let x = 0;
     for (let i = 0; i < hours.length; i++) {
         x = 0;
         for (let j = 0; j < cities.length; j++) {
@@ -180,5 +183,38 @@ for (let i = -1; i <= cities.length; i++) {
         cities[i].render();
     }
 }
+let flag = true;
+let formFlag = true;
+function showTable() {
+    if(formFlag && flag) {
+        document.getElementsByTagName('form')[0].style.opacity = '0';
+        document.getElementsByTagName('form')[0].style.height = '0';
+        document.getElementsByTagName('table')[0].style.opacity = '1';
+        flag = false;
+    }
+    else if (flag) {
+        document.getElementsByTagName('table')[0].style.opacity = '1';
+        flag = false;
+    }
+    else {
+        document.getElementsByTagName('table')[0].style.opacity = '0';
+        flag = true;
+    }
+}
+function showForm() {
+    if (formFlag) {
+        document.getElementsByTagName('form')[0].style.opacity = '1';
+        document.getElementsByTagName('form')[0].style.height = '400px';
+        formFlag = false;
+    }
 
+    else {
+        document.getElementsByTagName('form')[0].style.opacity = '0';
+        formFlag = true;
+    }
 
+}
+
+// formFlag = false , flag = true 
+// document.getElementsByTagName('form')[0].style.opacity = '0';
+//document.getElementsByTagName('form')[0].style.height = '0';
