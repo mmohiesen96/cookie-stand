@@ -118,3 +118,17 @@ p,li{
     font-weight: 800;
 
 }
+
+#sales-button{
+    text-align: center;
+    text-decoration: none;
+    transition: 0.7s;
+    border: none;
+    color: blanchedalmond;
+    background-color: #0f0f0f;
+    padding: 15px;
+    border-radius: 0.7rem ;
+    position: absolute;
+    left: 50px;
+    top: 250px;
+}
