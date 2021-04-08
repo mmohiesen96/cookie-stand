@@ -59,7 +59,6 @@ City.prototype.sales = function () {
     for (let i = 0; i < hours.length; i++) {
         this.averageSales[i] = Math.floor(this.costumerHrGenerator[i] * this.avgCookie);
         this.total += this.averageSales[i];
-        totalOfTotals += this.averageSales[i];
     }
 };
 
@@ -107,8 +106,10 @@ function hourlySalesCalculator() {
         x = 0;
         for (let j = 0; j < cities.length; j++) {
             x += cities[j].averageSales[i];
+
         }
         hourlySales.push(x);
+        totalOfTotals+=hourlySales[i];
     }
     console.log(hourlySales);
 }
@@ -146,7 +147,7 @@ function addCity(event) {
     let minCookie = parseInt(event.target.minField.value);
     let maxCookie = parseInt(event.target.maxField.value);
     let avgCookie = parseInt(event.target.avgField.value);
-
+    totalOfTotals = 0;
     let newCity = new City(minCookie, maxCookie, avgCookie, startTotal, cityName);
     console.log(newCity);
     console.log(totalOfTotals);
