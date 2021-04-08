@@ -12,6 +12,7 @@ let parentTable = document.getElementById('Container');
 let tableElement = document.createElement('table');
 parentTable.appendChild(tableElement);
 let cities = [];
+
 //  Constructor for cities
 
 function City(minCust, maxCust, avgCookie, total, name) {
@@ -25,7 +26,6 @@ function City(minCust, maxCust, avgCookie, total, name) {
     cities.push(this);
 }
 // Prototype functions and properties 
-
 
 City.prototype.customers = function () {
     for (let i = 0; i < hours.length; i++) {
@@ -62,6 +62,7 @@ City.prototype.sales = function () {
     }
 };
 
+// Cities Objects
 
 let Seattle = new City(23, 65, 6.3, 0, 'Seattle');
 console.log(Seattle);
@@ -73,10 +74,6 @@ let Paris = new City(20, 38, 2.3, 0, 'Paris');
 console.log(Paris);
 let Lima = new City(2, 16, 4.6, 0, 'Lima');
 console.log(Lima);
-
-
-// Hourly sales calculator
-
 
 // tr for header
 function hoursDisplay() {
@@ -98,6 +95,9 @@ function hoursDisplay() {
     trElement.appendChild(thElement).textContent = 'Total';
 
 }
+
+// Footer calculator
+
 let hourlySales = [];
 function hourlySalesCalculator() {
     hourlySales = [];
@@ -113,6 +113,8 @@ function hourlySalesCalculator() {
     }
     console.log(hourlySales);
 }
+
+// Footer Renderer
 
 function hourlyTotal() {
     hourlySalesCalculator();
@@ -136,10 +138,9 @@ function hourlyTotal() {
 
 }
 
+// Form Collector
 let form = document.getElementById('add-city');
-
 form.addEventListener('submit', addCity);
-
 function addCity(event) {
     event.preventDefault();
     let cityName = event.target.nameField.value;
@@ -167,10 +168,10 @@ function addCity(event) {
     }
 
 }
-// function hideFooter() {
 
-// }
 console.log(cities);
+
+// Rendering Cities
 for (let i = -1; i <= cities.length; i++) {
     if (i === -1) {
         hoursDisplay();
@@ -184,6 +185,8 @@ for (let i = -1; i <= cities.length; i++) {
         cities[i].render();
     }
 }
+
+// Showing / Hiding table and form
 let flag = true;
 let formFlag = true;
 function showTable() {
@@ -215,6 +218,8 @@ function showForm() {
     }
 
 }
+
+// Tracer for the hiding function
 
 // formFlag = false , flag = true 
 // document.getElementsByTagName('form')[0].style.opacity = '0';
