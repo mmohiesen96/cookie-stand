@@ -11,7 +11,7 @@ let totalOfTotals = 0;
 let parentTable = document.getElementById('Container');
 let tableElement = document.createElement('table');
 parentTable.appendChild(tableElement);
-let cities = getStorage();
+let cities = [];
 
 
 //  Constructor for cities
@@ -64,6 +64,7 @@ City.prototype.sales = function () {
 };
 
 // Cities Objects
+
 let Seattle = new City(23, 65, 6.3, 0, 'Seattle');
 console.log(Seattle);
 let Tokyo = new City(3, 24, 1.2, 0, 'Tokyo');
@@ -74,8 +75,6 @@ let Paris = new City(20, 38, 2.3, 0, 'Paris');
 console.log(Paris);
 let Lima = new City(2, 16, 4.6, 0, 'Lima');
 console.log(Lima);
-
-
 
 
 // getStorage();
@@ -235,7 +234,14 @@ function updateStorage() {
     localStorage.setItem('Cities', JSON.stringify(cities));
 }
 function getStorage() {
-    return JSON.parse(localStorage.getItem('Cities'));
+    let stringCities = localStorage.getItem('Cities');
+    let objCities = JSON.parse(stringCities);
+    if (objCities) {
+        cities= [];
+        for (let i = 0; i < objCities.length; i++) {
+            new City(objCities[i].minCust, objCities[i].maxCust, objCities[i].avgCookie, objCities[i].total, objCities[i].name);
+        }
+    }
 }
 
-// getStorage();
+getStorage();
