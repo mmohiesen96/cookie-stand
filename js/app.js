@@ -11,7 +11,8 @@ let totalOfTotals = 0;
 let parentTable = document.getElementById('Container');
 let tableElement = document.createElement('table');
 parentTable.appendChild(tableElement);
-let cities = [];
+let cities = getStorage();
+
 
 //  Constructor for cities
 
@@ -63,7 +64,6 @@ City.prototype.sales = function () {
 };
 
 // Cities Objects
-
 let Seattle = new City(23, 65, 6.3, 0, 'Seattle');
 console.log(Seattle);
 let Tokyo = new City(3, 24, 1.2, 0, 'Tokyo');
@@ -74,6 +74,12 @@ let Paris = new City(20, 38, 2.3, 0, 'Paris');
 console.log(Paris);
 let Lima = new City(2, 16, 4.6, 0, 'Lima');
 console.log(Lima);
+
+
+
+
+// getStorage();
+
 
 // tr for header
 function hoursDisplay() {
@@ -86,7 +92,7 @@ function hoursDisplay() {
         }
         else {
             let thElement = document.createElement('th');
-            thElement.setAttribute('id' , 'Store-time');
+            thElement.setAttribute('id', 'Store-time');
             trElement.appendChild(thElement).textContent = 'Store / Time';
         }
     }
@@ -109,7 +115,7 @@ function hourlySalesCalculator() {
 
         }
         hourlySales.push(x);
-        totalOfTotals+=hourlySales[i];
+        totalOfTotals += hourlySales[i];
     }
     console.log(hourlySales);
 }
@@ -166,61 +172,70 @@ function addCity(event) {
             cities[i].render();
         }
     }
+    updateStorage();
 
 }
 
 console.log(cities);
-
 // Rendering Cities
-for (let i = -1; i <= cities.length; i++) {
-    if (i === -1) {
-        hoursDisplay();
-    }
-    else if (i === cities.length) {
-        hourlyTotal();
-    }
-    else {
-        cities[i].customers();
-        cities[i].sales();
-        cities[i].render();
+function overallRender() {
+    getStorage();
+    for (let i = -1; i <= cities.length; i++) {
+        if (i === -1) {
+            hoursDisplay();
+        }
+        else if (i === cities.length) {
+            hourlyTotal();
+        }
+        else {
+            cities[i].customers();
+            cities[i].sales();
+            cities[i].render();
+        }
     }
 }
 
+
+overallRender();
 // Showing / Hiding table and form
-let flag = true;
-let formFlag = true;
-function showTable() {
-    if(formFlag && flag) {
-        document.getElementsByTagName('form')[0].style.opacity = '0';
-        document.getElementsByTagName('form')[0].style.height = '0';
-        document.getElementsByTagName('table')[0].style.opacity = '1';
-        flag = false;
-    }
-    else if (flag) {
-        document.getElementsByTagName('table')[0].style.opacity = '1';
-        flag = false;
-    }
-    else {
-        document.getElementsByTagName('table')[0].style.opacity = '0';
-        flag = true;
-    }
+// let flag = true;
+// let formFlag = true;
+// function showTable() {
+//     if(formFlag && flag) {
+//         document.getElementsByTagName('form')[0].style.opacity = '0';
+//         document.getElementsByTagName('form')[0].style.height = '0';
+//         document.getElementsByTagName('table')[0].style.opacity = '1';
+//         flag = false;
+//     }
+//     else if (flag) {
+//         document.getElementsByTagName('table')[0].style.opacity = '1';
+//         flag = false;
+//     }
+//     else {
+//         document.getElementsByTagName('table')[0].style.opacity = '0';
+//         flag = true;
+//     }
+// }
+// function showForm() {
+//     if (formFlag) {
+//         document.getElementsByTagName('form')[0].style.opacity = '1';
+//         document.getElementsByTagName('form')[0].style.height = '400px';
+//         formFlag = false;
+//     }
+
+//     else {
+//         document.getElementsByTagName('form')[0].style.opacity = '0';
+//         formFlag = true;
+//     }
+
+// }
+
+
+function updateStorage() {
+    localStorage.setItem('Cities', JSON.stringify(cities));
 }
-function showForm() {
-    if (formFlag) {
-        document.getElementsByTagName('form')[0].style.opacity = '1';
-        document.getElementsByTagName('form')[0].style.height = '400px';
-        formFlag = false;
-    }
-
-    else {
-        document.getElementsByTagName('form')[0].style.opacity = '0';
-        formFlag = true;
-    }
-
+function getStorage() {
+    return JSON.parse(localStorage.getItem('Cities'));
 }
 
-// Tracer for the hiding function
-
-// formFlag = false , flag = true 
-// document.getElementsByTagName('form')[0].style.opacity = '0';
-//document.getElementsByTagName('form')[0].style.height = '0';
+// getStorage();
